@@ -1,0 +1,107 @@
+{
+  "name": "kwiqbill",
+  "version": "1.0.0",
+  "description": "Billing Software Desktop Application",
+  "author": "Your Name",
+  "license": "ISC",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "electron": "electron .",
+    "dev:web": "concurrently \"cd backend && npm start\" \"cd frontend && npm run dev\"",
+    "build:frontend": "cd frontend && npm run build",
+    "dist": "npm run build:frontend && electron-builder"
+  },
+  "dependencies": {
+    "axios": "^1.13.3",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.6.2",
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-async-handler": "^1.2.0",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "google-auth-library": "^10.5.0",
+    "googleapis": "^170.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
+    "keytar": "^7.9.0",
+    "mongoose": "^9.0.1",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "schedular": "^0.0.1",
+    "sharp": "^0.32.1",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0",
+    "wait-on": "^9.0.3"
+  },
+  "build": {
+    "appId": "com.yourcompany.billing",
+    "productName": "Kwiqbill Billing Software",
+    "asar": true,
+    "npmRebuild": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "backend/**/*",
+      "frontend/dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend/.env",
+        "to": "backend/.env"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Billing App",
+        "schemes": [
+          "billing"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "buildResources/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "license": "buildResources/license.txt",
+      "deleteAppDataOnUninstall": false,
+      "include": "buildResources/installer.nsh"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "buildResources/icons",
+      "category": "Office"
+    },
+     "mac": {
+    "target": "dmg",
+    "arch": ["universal"]
+  }
+  }
+}
